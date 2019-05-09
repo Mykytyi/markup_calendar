@@ -1,0 +1,56 @@
+body {
+  font-family: Arial, sans-serif;
+  font-size: 30px;
+
+  .calendar {
+    display: grid;
+    grid-template: repeat(7, 100px) / repeat(7, 100px);
+    grid-gap: 5px 5px;
+    grid-column-start: 1;
+    justify-content: center;
+
+    div{
+      display: none;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+      text-align: center;
+      background: #eee;
+      border: 1px solid black;
+      transition-duration: 0.5s;
+    }
+
+    div:hover {
+      background-color: pink;
+      transform: translateY(-20px);
+    }
+  }
+}
+
+$week: (
+        mon: 1,
+        tue: 2,
+        wed: 3,
+        thu: 4,
+        fri: 5,
+        sat: 6,
+        sun: 7
+);
+
+@for $monthDays from 28 through 31 {
+  @for $monthDay from 1 through $monthDays{
+    .calendar-#{$monthDays} div:nth-child(#{$monthDay}){
+      display: block;
+    }
+
+    .calendar-#{$monthDays} div:nth-child(#{$monthDay})::before {
+      content: "#{$monthDay}";
+    }
+  }
+}
+
+@each $day, $num in $week {
+  .calendar-#{$day} div:first-child {
+    grid-column-start: #{$num};
+  }
+}
